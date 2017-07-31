@@ -6,34 +6,20 @@
 ![](https://img.shields.io/badge/download-791K-brightgreen.svg)
 ![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) 
 
-
+实现淘宝商品详情页，下拉展示效果，实现简单，封装结构，高解耦性。
 
 | 名称 |1.列表页 |2.展示页 |3.结果页 |
 | ------------- | ------------- | ------------- | ------------- |
-| 截图 | ![](http://og1yl0w9z.bkt.clouddn.com/17-7-6/49394070.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-7-6/43197086.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-7-6/14637275.jpg) |
-| 描述 | 通过 storyboard 搭建基本框架 | 字典排列前 | 字典排列后 |
+| 截图 | ![](http://og1yl0w9z.bkt.clouddn.com/17-7-31/57758553.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-7-31/4575330.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-7-31/63399370.jpg) |
+| 描述 | 通过 storyboard 搭建基本框架 | 正常展示 | 下拉展示 |
 
 
 ## Advantage 框架的优势
 * 1.文件少，代码简洁
 * 2.不依赖任何其他第三方库
-* 3.同时支持本地图片/Gif及网络图片/Gif
-* 4.自带图片下载与缓存
-* 5.具备较高自定义性
+* 3.封装实现，高解耦性
+* 4.具备较高自定义性
 
-## Installation 安装
-### 1.手动安装:
-`下载Demo后,将功能文件夹拖入到项目中, 导入头文件后开始使用。`
-### 2.CocoaPods安装:
-修改“Podfile”文件
-```
-pod 'AutoAlignButtonTools',:git => 'https://github.com/ReverseScale/AutoAlignButtonToolsCocoapodsDemo.git'
-```
-控制台执行 Pods 安装命令 （ 简化安装：pod install --no-repo-update ）
-```
-pod install
-```
-> 如果 pod search 发现不是最新版本，在终端执行pod setup命令更新本地spec镜像缓存，重新搜索就OK了
 
 ## Requirements 要求
 * iOS 7+
@@ -42,12 +28,24 @@ pod install
 
 ## Usage 使用方法
 ### 第一步 引入头文件
-```
-#import "OrderDic.h"
+``` Objective-C
+#import "UIScrollView+RSPaging.h"
+#import "ProductDetailViewController.h" //下半部分的ViewController
+@interface ViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@end
 ```
 ### 第二步 简单调用
-```
-[OrderDic order:dic]
+``` Objective-C
+self.edgesForExtendedLayout = UIRectEdgeNone;
+self.scrollView.contentSize = CGSizeMake(0, self.view.frame.size.height - 44);
+ProductDetailViewController *detailVC = [[ProductDetailViewController alloc] init];
+[self addChildViewController:detailVC];
+    
+if (detailVC.view != nil) {
+    self.scrollView.pagingScrollView = detailVC.scrollView;
+}
+
 ```
 
 使用简单、效率高效、进程安全~~~如果你有更好的建议,希望不吝赐教!
